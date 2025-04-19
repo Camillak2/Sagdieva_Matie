@@ -4,35 +4,59 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище SagdievaK_MatieModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Master_Service">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ID_Master" Type="int" />
-          <Property Name="ID_Service" Type="int" />
-        </EntityType>
-        <!--Ошибки, обнаруженные при создании:
-предупреждение 6013: Первичный ключ в таблице или представлении "SagdievaK_Matie.dbo.MasterQualification" не определен, его не удалось вывести. Эта таблица или представление исключены. Чтобы использовать сущность, необходимо проверить схему, добавить правильные ключи и раскомментировать ее.
-        <EntityType Name="MasterQualification">
-          <Property Name="ID_Master" Type="int" />
-          <Property Name="ID_TypeQual" Type="int" />
-        </EntityType>-->
-        <EntityType Name="Role">
+    <Schema Namespace="Хранилище SagdievaKamilla_MatieExamModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CollectionService">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <EntityType Name="Service">
+        <EntityType Name="Master_Service">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
+          <Property Name="IDMaster" Type="int" />
+          <Property Name="IDService" Type="int" />
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar(max)" />
-          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="MasterQualification">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="IDMaster" Type="int" Nullable="false" />
+          <Property Name="ID_TypeQual" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="IDOrder" />
+          </Key>
+          <Property Name="IDOrder" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDService" Type="int" />
+          <Property Name="IDUser" Type="int" />
+          <Property Name="NumberInQueu" Type="int" />
+          <Property Name="IDWorker" Type="int" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="IDRole" />
+          </Key>
+          <Property Name="IDRole" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="Service">
+          <Key>
+            <PropertyRef Name="IDProduct" />
+          </Key>
+          <Property Name="IDProduct" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+          <Property Name="IDWorker" Type="int" />
+          <Property Name="ID_Collection" Type="int" />
+          <Property Name="ID_Type" Type="int" />
+          <Property Name="Image" Type="nvarchar(max)" />
+          <Property Name="Cost" Type="decimal" Precision="8" Scale="2" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -51,116 +75,336 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nchar" MaxLength="10" />
         </EntityType>
-        <EntityType Name="User">
+        <EntityType Name="TypeService">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ID_Role" Type="int" />
+          <Property Name="Name" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="IDUser" />
+          </Key>
+          <Property Name="IDUser" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Surname" Type="nvarchar" MaxLength="50" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
-          <Property Name="Login" Type="nchar" MaxLength="10" />
-          <Property Name="Password" Type="nchar" MaxLength="10" />
+          <Property Name="BalanceShop" Type="int" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Worker">
+          <Key>
+            <PropertyRef Name="IDWorker" />
+          </Key>
+          <Property Name="IDWorker" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="IDRole" Type="int" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_Master_Service_Service">
           <End Role="Service" Type="Self.Service" Multiplicity="0..1" />
           <End Role="Master_Service" Type="Self.Master_Service" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Service">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="IDProduct" />
             </Principal>
             <Dependent Role="Master_Service">
-              <PropertyRef Name="ID_Service" />
+              <PropertyRef Name="IDService" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Master_Service_User">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+        <Association Name="FK_Master_Service_Worker">
+          <End Role="Worker" Type="Self.Worker" Multiplicity="0..1" />
           <End Role="Master_Service" Type="Self.Master_Service" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="ID" />
+            <Principal Role="Worker">
+              <PropertyRef Name="IDWorker" />
             </Principal>
             <Dependent Role="Master_Service">
-              <PropertyRef Name="ID_Master" />
+              <PropertyRef Name="IDMaster" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Ошибки, обнаруженные при создании:
-ошибка 6004: Невозможно найти таблицу "SagdievaK_Matie.dbo.MasterQualification", на которую ссылается связь.
-        <Association Name="FK_MasterQualification_TypeQualification" />-->
-        <!--Ошибки, обнаруженные при создании:
-ошибка 6004: Невозможно найти таблицу "SagdievaK_Matie.dbo.MasterQualification", на которую ссылается связь.
-        <Association Name="FK_MasterQualification_User" />-->
-        <Association Name="FK_User_Role">
-          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
-          <End Role="User" Type="Self.User" Multiplicity="*" />
+        <Association Name="FK_MasterQualification_TypeQualification1">
+          <End Role="TypeQualification" Type="Self.TypeQualification" Multiplicity="1" />
+          <End Role="MasterQualification" Type="Self.MasterQualification" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Role">
+            <Principal Role="TypeQualification">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="User">
-              <PropertyRef Name="ID_Role" />
+            <Dependent Role="MasterQualification">
+              <PropertyRef Name="ID_TypeQual" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Хранилище SagdievaK_MatieModelContainer">
+        <Association Name="FK_MasterQualification_Worker1">
+          <End Role="Worker" Type="Self.Worker" Multiplicity="1" />
+          <End Role="MasterQualification" Type="Self.MasterQualification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Worker">
+              <PropertyRef Name="IDWorker" />
+            </Principal>
+            <Dependent Role="MasterQualification">
+              <PropertyRef Name="IDMaster" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Product">
+          <End Role="Service" Type="Self.Service" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="IDProduct" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="IDService" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="IDUser" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="IDUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Worker">
+          <End Role="Worker" Type="Self.Worker" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Worker">
+              <PropertyRef Name="IDWorker" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="IDWorker" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Service_CollectionService">
+          <End Role="CollectionService" Type="Self.CollectionService" Multiplicity="0..1" />
+          <End Role="Service" Type="Self.Service" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CollectionService">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Service">
+              <PropertyRef Name="ID_Collection" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Service_TypeService">
+          <End Role="TypeService" Type="Self.TypeService" Multiplicity="0..1" />
+          <End Role="Service" Type="Self.Service" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeService">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Service">
+              <PropertyRef Name="ID_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Worker_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="Worker" Type="Self.Worker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="IDRole" />
+            </Principal>
+            <Dependent Role="Worker">
+              <PropertyRef Name="IDRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище SagdievaKamilla_MatieExamModelContainer">
+          <EntitySet Name="CollectionService" EntityType="Self.CollectionService" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Master_Service" EntityType="Self.Master_Service" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MasterQualification" EntityType="Self.MasterQualification" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Service" EntityType="Self.Service" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TypeQualification" EntityType="Self.TypeQualification" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypeService" EntityType="Self.TypeService" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Worker" EntityType="Self.Worker" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Master_Service_Service" Association="Self.FK_Master_Service_Service">
             <End Role="Service" EntitySet="Service" />
             <End Role="Master_Service" EntitySet="Master_Service" />
           </AssociationSet>
-          <AssociationSet Name="FK_Master_Service_User" Association="Self.FK_Master_Service_User">
-            <End Role="User" EntitySet="User" />
+          <AssociationSet Name="FK_Master_Service_Worker" Association="Self.FK_Master_Service_Worker">
+            <End Role="Worker" EntitySet="Worker" />
             <End Role="Master_Service" EntitySet="Master_Service" />
           </AssociationSet>
-          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
-            <End Role="Role" EntitySet="Role" />
+          <AssociationSet Name="FK_MasterQualification_TypeQualification1" Association="Self.FK_MasterQualification_TypeQualification1">
+            <End Role="TypeQualification" EntitySet="TypeQualification" />
+            <End Role="MasterQualification" EntitySet="MasterQualification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MasterQualification_Worker1" Association="Self.FK_MasterQualification_Worker1">
+            <End Role="Worker" EntitySet="Worker" />
+            <End Role="MasterQualification" EntitySet="MasterQualification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Product" Association="Self.FK_Order_Product">
+            <End Role="Service" EntitySet="Service" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_User" Association="Self.FK_Order_User">
             <End Role="User" EntitySet="User" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Worker" Association="Self.FK_Order_Worker">
+            <End Role="Worker" EntitySet="Worker" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Service_CollectionService" Association="Self.FK_Service_CollectionService">
+            <End Role="CollectionService" EntitySet="CollectionService" />
+            <End Role="Service" EntitySet="Service" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Service_TypeService" Association="Self.FK_Service_TypeService">
+            <End Role="TypeService" EntitySet="TypeService" />
+            <End Role="Service" EntitySet="Service" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Worker_Role" Association="Self.FK_Worker_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Worker" EntitySet="Worker" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="SagdievaK_MatieModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Master_Service">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ID_Master" Type="Int32" />
-          <Property Name="ID_Service" Type="Int32" />
-          <NavigationProperty Name="Service" Relationship="Self.FK_Master_Service_Service" FromRole="Master_Service" ToRole="Service" />
-          <NavigationProperty Name="User" Relationship="Self.FK_Master_Service_User" FromRole="Master_Service" ToRole="User" />
-        </EntityType>
-        <EntityType Name="Role">
+      <Schema Namespace="SagdievaKamilla_MatieExamModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="SagdievaKamilla_MatieExamEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CollectionService" EntityType="SagdievaKamilla_MatieExamModel.CollectionService" />
+          <EntitySet Name="Master_Service" EntityType="SagdievaKamilla_MatieExamModel.Master_Service" />
+          <EntitySet Name="MasterQualification" EntityType="SagdievaKamilla_MatieExamModel.MasterQualification" />
+          <EntitySet Name="Order" EntityType="SagdievaKamilla_MatieExamModel.Order" />
+          <EntitySet Name="Role" EntityType="SagdievaKamilla_MatieExamModel.Role" />
+          <EntitySet Name="Service" EntityType="SagdievaKamilla_MatieExamModel.Service" />
+          <EntitySet Name="sysdiagrams" EntityType="SagdievaKamilla_MatieExamModel.sysdiagrams" />
+          <EntitySet Name="TypeQualification" EntityType="SagdievaKamilla_MatieExamModel.TypeQualification" />
+          <EntitySet Name="TypeService" EntityType="SagdievaKamilla_MatieExamModel.TypeService" />
+          <EntitySet Name="User" EntityType="SagdievaKamilla_MatieExamModel.User" />
+          <EntitySet Name="Worker" EntityType="SagdievaKamilla_MatieExamModel.Worker" />
+          <AssociationSet Name="FK_Service_CollectionService" Association="SagdievaKamilla_MatieExamModel.FK_Service_CollectionService">
+            <End Role="CollectionService" EntitySet="CollectionService" />
+            <End Role="Service" EntitySet="Service" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Master_Service_Service" Association="SagdievaKamilla_MatieExamModel.FK_Master_Service_Service">
+            <End Role="Service" EntitySet="Service" />
+            <End Role="Master_Service" EntitySet="Master_Service" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Master_Service_Worker" Association="SagdievaKamilla_MatieExamModel.FK_Master_Service_Worker">
+            <End Role="Worker" EntitySet="Worker" />
+            <End Role="Master_Service" EntitySet="Master_Service" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MasterQualification_TypeQualification1" Association="SagdievaKamilla_MatieExamModel.FK_MasterQualification_TypeQualification1">
+            <End Role="TypeQualification" EntitySet="TypeQualification" />
+            <End Role="MasterQualification" EntitySet="MasterQualification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MasterQualification_Worker1" Association="SagdievaKamilla_MatieExamModel.FK_MasterQualification_Worker1">
+            <End Role="Worker" EntitySet="Worker" />
+            <End Role="MasterQualification" EntitySet="MasterQualification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Product" Association="SagdievaKamilla_MatieExamModel.FK_Order_Product">
+            <End Role="Service" EntitySet="Service" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_User" Association="SagdievaKamilla_MatieExamModel.FK_Order_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Worker" Association="SagdievaKamilla_MatieExamModel.FK_Order_Worker">
+            <End Role="Worker" EntitySet="Worker" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Worker_Role" Association="SagdievaKamilla_MatieExamModel.FK_Worker_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Worker" EntitySet="Worker" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Service_TypeService" Association="SagdievaKamilla_MatieExamModel.FK_Service_TypeService">
+            <End Role="TypeService" EntitySet="TypeService" />
+            <End Role="Service" EntitySet="Service" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="CollectionService">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="User" Relationship="Self.FK_User_Role" FromRole="Role" ToRole="User" />
+          <NavigationProperty Name="Service" Relationship="SagdievaKamilla_MatieExamModel.FK_Service_CollectionService" FromRole="CollectionService" ToRole="Service" />
         </EntityType>
-        <EntityType Name="Service">
+        <EntityType Name="Master_Service">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
+          <Property Name="IDMaster" Type="Int32" />
+          <Property Name="IDService" Type="Int32" />
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Master_Service" Relationship="Self.FK_Master_Service_Service" FromRole="Service" ToRole="Master_Service" />
+          <NavigationProperty Name="Service" Relationship="SagdievaKamilla_MatieExamModel.FK_Master_Service_Service" FromRole="Master_Service" ToRole="Service" />
+          <NavigationProperty Name="Worker" Relationship="SagdievaKamilla_MatieExamModel.FK_Master_Service_Worker" FromRole="Master_Service" ToRole="Worker" />
+        </EntityType>
+        <EntityType Name="MasterQualification">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="IDMaster" Type="Int32" Nullable="false" />
+          <Property Name="ID_TypeQual" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="TypeQualification" Relationship="SagdievaKamilla_MatieExamModel.FK_MasterQualification_TypeQualification1" FromRole="MasterQualification" ToRole="TypeQualification" />
+          <NavigationProperty Name="Worker" Relationship="SagdievaKamilla_MatieExamModel.FK_MasterQualification_Worker1" FromRole="MasterQualification" ToRole="Worker" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="IDOrder" />
+          </Key>
+          <Property Name="IDOrder" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDService" Type="Int32" />
+          <Property Name="IDUser" Type="Int32" />
+          <Property Name="NumberInQueu" Type="Int32" />
+          <Property Name="IDWorker" Type="Int32" />
+          <NavigationProperty Name="Service" Relationship="SagdievaKamilla_MatieExamModel.FK_Order_Product" FromRole="Order" ToRole="Service" />
+          <NavigationProperty Name="User" Relationship="SagdievaKamilla_MatieExamModel.FK_Order_User" FromRole="Order" ToRole="User" />
+          <NavigationProperty Name="Worker" Relationship="SagdievaKamilla_MatieExamModel.FK_Order_Worker" FromRole="Order" ToRole="Worker" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="IDRole" />
+          </Key>
+          <Property Name="IDRole" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Worker" Relationship="SagdievaKamilla_MatieExamModel.FK_Worker_Role" FromRole="Role" ToRole="Worker" />
+        </EntityType>
+        <EntityType Name="Service">
+          <Key>
+            <PropertyRef Name="IDProduct" />
+          </Key>
+          <Property Name="IDProduct" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IDWorker" Type="Int32" />
+          <Property Name="ID_Collection" Type="Int32" />
+          <Property Name="ID_Type" Type="Int32" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Cost" Type="Decimal" Precision="8" Scale="2" />
+          <NavigationProperty Name="CollectionService" Relationship="SagdievaKamilla_MatieExamModel.FK_Service_CollectionService" FromRole="Service" ToRole="CollectionService" />
+          <NavigationProperty Name="Master_Service" Relationship="SagdievaKamilla_MatieExamModel.FK_Master_Service_Service" FromRole="Service" ToRole="Master_Service" />
+          <NavigationProperty Name="Order" Relationship="SagdievaKamilla_MatieExamModel.FK_Order_Product" FromRole="Service" ToRole="Order" />
+          <NavigationProperty Name="TypeService" Relationship="SagdievaKamilla_MatieExamModel.FK_Service_TypeService" FromRole="Service" ToRole="TypeService" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
           </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="principal_id" Type="Int32" Nullable="false" />
           <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="version" Type="Int32" />
@@ -172,136 +416,276 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="MasterQualification" Relationship="SagdievaKamilla_MatieExamModel.FK_MasterQualification_TypeQualification1" FromRole="TypeQualification" ToRole="MasterQualification" />
         </EntityType>
-        <EntityType Name="User">
+        <EntityType Name="TypeService">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ID_Role" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Service" Relationship="SagdievaKamilla_MatieExamModel.FK_Service_TypeService" FromRole="TypeService" ToRole="Service" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="IDUser" />
+          </Key>
+          <Property Name="IDUser" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Login" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Password" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="Master_Service" Relationship="Self.FK_Master_Service_User" FromRole="User" ToRole="Master_Service" />
-          <NavigationProperty Name="Role" Relationship="Self.FK_User_Role" FromRole="User" ToRole="Role" />
+          <Property Name="BalanceShop" Type="Int32" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Order" Relationship="SagdievaKamilla_MatieExamModel.FK_Order_User" FromRole="User" ToRole="Order" />
         </EntityType>
+        <EntityType Name="Worker">
+          <Key>
+            <PropertyRef Name="IDWorker" />
+          </Key>
+          <Property Name="IDWorker" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IDRole" Type="Int32" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Master_Service" Relationship="SagdievaKamilla_MatieExamModel.FK_Master_Service_Worker" FromRole="Worker" ToRole="Master_Service" />
+          <NavigationProperty Name="MasterQualification" Relationship="SagdievaKamilla_MatieExamModel.FK_MasterQualification_Worker1" FromRole="Worker" ToRole="MasterQualification" />
+          <NavigationProperty Name="Order" Relationship="SagdievaKamilla_MatieExamModel.FK_Order_Worker" FromRole="Worker" ToRole="Order" />
+          <NavigationProperty Name="Role" Relationship="SagdievaKamilla_MatieExamModel.FK_Worker_Role" FromRole="Worker" ToRole="Role" />
+        </EntityType>
+        <Association Name="FK_Service_CollectionService">
+          <End Type="SagdievaKamilla_MatieExamModel.CollectionService" Role="CollectionService" Multiplicity="0..1" />
+          <End Type="SagdievaKamilla_MatieExamModel.Service" Role="Service" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CollectionService">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Service">
+              <PropertyRef Name="ID_Collection" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Master_Service_Service">
-          <End Role="Service" Type="Self.Service" Multiplicity="0..1" />
-          <End Role="Master_Service" Type="Self.Master_Service" Multiplicity="*" />
+          <End Type="SagdievaKamilla_MatieExamModel.Service" Role="Service" Multiplicity="0..1" />
+          <End Type="SagdievaKamilla_MatieExamModel.Master_Service" Role="Master_Service" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Service">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="IDProduct" />
             </Principal>
             <Dependent Role="Master_Service">
-              <PropertyRef Name="ID_Service" />
+              <PropertyRef Name="IDService" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Master_Service_User">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
-          <End Role="Master_Service" Type="Self.Master_Service" Multiplicity="*" />
+        <Association Name="FK_Master_Service_Worker">
+          <End Type="SagdievaKamilla_MatieExamModel.Worker" Role="Worker" Multiplicity="0..1" />
+          <End Type="SagdievaKamilla_MatieExamModel.Master_Service" Role="Master_Service" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Worker">
+              <PropertyRef Name="IDWorker" />
+            </Principal>
+            <Dependent Role="Master_Service">
+              <PropertyRef Name="IDMaster" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MasterQualification_TypeQualification1">
+          <End Type="SagdievaKamilla_MatieExamModel.TypeQualification" Role="TypeQualification" Multiplicity="1" />
+          <End Type="SagdievaKamilla_MatieExamModel.MasterQualification" Role="MasterQualification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeQualification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MasterQualification">
+              <PropertyRef Name="ID_TypeQual" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MasterQualification_Worker1">
+          <End Type="SagdievaKamilla_MatieExamModel.Worker" Role="Worker" Multiplicity="1" />
+          <End Type="SagdievaKamilla_MatieExamModel.MasterQualification" Role="MasterQualification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Worker">
+              <PropertyRef Name="IDWorker" />
+            </Principal>
+            <Dependent Role="MasterQualification">
+              <PropertyRef Name="IDMaster" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Product">
+          <End Type="SagdievaKamilla_MatieExamModel.Service" Role="Service" Multiplicity="0..1" />
+          <End Type="SagdievaKamilla_MatieExamModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="IDProduct" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="IDService" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_User">
+          <End Type="SagdievaKamilla_MatieExamModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="SagdievaKamilla_MatieExamModel.Order" Role="Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="IDUser" />
             </Principal>
-            <Dependent Role="Master_Service">
-              <PropertyRef Name="ID_Master" />
+            <Dependent Role="Order">
+              <PropertyRef Name="IDUser" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_User_Role">
-          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
-          <End Role="User" Type="Self.User" Multiplicity="*" />
+        <Association Name="FK_Order_Worker">
+          <End Type="SagdievaKamilla_MatieExamModel.Worker" Role="Worker" Multiplicity="0..1" />
+          <End Type="SagdievaKamilla_MatieExamModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Worker">
+              <PropertyRef Name="IDWorker" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="IDWorker" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Worker_Role">
+          <End Type="SagdievaKamilla_MatieExamModel.Role" Role="Role" Multiplicity="0..1" />
+          <End Type="SagdievaKamilla_MatieExamModel.Worker" Role="Worker" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Role">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="IDRole" />
             </Principal>
-            <Dependent Role="User">
-              <PropertyRef Name="ID_Role" />
+            <Dependent Role="Worker">
+              <PropertyRef Name="IDRole" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="SagdievaK_MatieEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Master_Service" EntityType="Self.Master_Service" />
-          <EntitySet Name="Role" EntityType="Self.Role" />
-          <EntitySet Name="Service" EntityType="Self.Service" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
-          <EntitySet Name="TypeQualification" EntityType="Self.TypeQualification" />
-          <EntitySet Name="User" EntityType="Self.User" />
-          <AssociationSet Name="FK_Master_Service_Service" Association="Self.FK_Master_Service_Service">
-            <End Role="Service" EntitySet="Service" />
-            <End Role="Master_Service" EntitySet="Master_Service" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Master_Service_User" Association="Self.FK_Master_Service_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="Master_Service" EntitySet="Master_Service" />
-          </AssociationSet>
-          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
-            <End Role="Role" EntitySet="Role" />
-            <End Role="User" EntitySet="User" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema>
+        <Association Name="FK_Service_TypeService">
+          <End Type="SagdievaKamilla_MatieExamModel.TypeService" Role="TypeService" Multiplicity="0..1" />
+          <End Type="SagdievaKamilla_MatieExamModel.Service" Role="Service" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeService">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Service">
+              <PropertyRef Name="ID_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище SagdievaK_MatieModelContainer" CdmEntityContainer="SagdievaK_MatieEntities">
+        <EntityContainerMapping StorageEntityContainer="Хранилище SagdievaKamilla_MatieExamModelContainer" CdmEntityContainer="SagdievaKamilla_MatieExamEntities">
+          <EntitySetMapping Name="CollectionService">
+            <EntityTypeMapping TypeName="SagdievaKamilla_MatieExamModel.CollectionService">
+              <MappingFragment StoreEntitySet="CollectionService">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Master_Service">
-            <EntityTypeMapping TypeName="SagdievaK_MatieModel.Master_Service">
+            <EntityTypeMapping TypeName="SagdievaKamilla_MatieExamModel.Master_Service">
               <MappingFragment StoreEntitySet="Master_Service">
                 <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="ID_Master" ColumnName="ID_Master" />
-                <ScalarProperty Name="ID_Service" ColumnName="ID_Service" />
+                <ScalarProperty Name="IDService" ColumnName="IDService" />
+                <ScalarProperty Name="IDMaster" ColumnName="IDMaster" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MasterQualification">
+            <EntityTypeMapping TypeName="SagdievaKamilla_MatieExamModel.MasterQualification">
+              <MappingFragment StoreEntitySet="MasterQualification">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ID_TypeQual" ColumnName="ID_TypeQual" />
+                <ScalarProperty Name="IDMaster" ColumnName="IDMaster" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order">
+            <EntityTypeMapping TypeName="SagdievaKamilla_MatieExamModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="IDWorker" ColumnName="IDWorker" />
+                <ScalarProperty Name="NumberInQueu" ColumnName="NumberInQueu" />
+                <ScalarProperty Name="IDUser" ColumnName="IDUser" />
+                <ScalarProperty Name="IDService" ColumnName="IDService" />
+                <ScalarProperty Name="IDOrder" ColumnName="IDOrder" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Role">
-            <EntityTypeMapping TypeName="SagdievaK_MatieModel.Role">
+            <EntityTypeMapping TypeName="SagdievaKamilla_MatieExamModel.Role">
               <MappingFragment StoreEntitySet="Role">
-                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IDRole" ColumnName="IDRole" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Service">
-            <EntityTypeMapping TypeName="SagdievaK_MatieModel.Service">
+            <EntityTypeMapping TypeName="SagdievaKamilla_MatieExamModel.Service">
               <MappingFragment StoreEntitySet="Service">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="ID_Type" ColumnName="ID_Type" />
+                <ScalarProperty Name="ID_Collection" ColumnName="ID_Collection" />
+                <ScalarProperty Name="IDWorker" ColumnName="IDWorker" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IDProduct" ColumnName="IDProduct" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="SagdievaK_MatieModel.sysdiagrams">
+            <EntityTypeMapping TypeName="SagdievaKamilla_MatieExamModel.sysdiagrams">
               <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
                 <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TypeQualification">
-            <EntityTypeMapping TypeName="SagdievaK_MatieModel.TypeQualification">
+            <EntityTypeMapping TypeName="SagdievaKamilla_MatieExamModel.TypeQualification">
               <MappingFragment StoreEntitySet="TypeQualification">
-                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeService">
+            <EntityTypeMapping TypeName="SagdievaKamilla_MatieExamModel.TypeService">
+              <MappingFragment StoreEntitySet="TypeService">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="User">
-            <EntityTypeMapping TypeName="SagdievaK_MatieModel.User">
+            <EntityTypeMapping TypeName="SagdievaKamilla_MatieExamModel.User">
               <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="ID_Role" ColumnName="ID_Role" />
-                <ScalarProperty Name="Surname" ColumnName="Surname" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Login" ColumnName="Login" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="BalanceShop" ColumnName="BalanceShop" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="IDUser" ColumnName="IDUser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Worker">
+            <EntityTypeMapping TypeName="SagdievaKamilla_MatieExamModel.Worker">
+              <MappingFragment StoreEntitySet="Worker">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="IDRole" ColumnName="IDRole" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="IDWorker" ColumnName="IDWorker" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

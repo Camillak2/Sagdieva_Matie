@@ -8,7 +8,7 @@
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         ResizeMode="NoResize"
-        Title="MainWindow" Height="800" Width="1200">
+        Title="MainWindow" Height="800" Width="1300">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="70"/>
@@ -16,7 +16,6 @@
         </Grid.RowDefinitions>
         <Frame x:Name="NaFr"
                Grid.Row="1"/>
-
         <StackPanel Orientation="Horizontal"
                     Grid.Row="0"
                     HorizontalAlignment="Right"
@@ -29,10 +28,9 @@
             Width="160"
             Height="55"
             Grid.RowSpan="1"
-            FontSize="26"
+            FontSize="30"
             HorizontalAlignment="Right"
             VerticalAlignment="Center"
-            Foreground="Black"
             FontFamily="Comic Sans MS" Click="SvernutBtn_Click"/>
             <Button x:Name="CloseBtn" Margin="15 0 0 0"
             Content="Закрыть"
@@ -42,10 +40,9 @@
             Width="160"
             Height="55"
             Grid.RowSpan="1"
-            FontSize="26"
+            FontSize="30"
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
-            Foreground="Black"
             FontFamily="Comic Sans MS" Click="CloseBtn_Click"/>
         </StackPanel>
     </Grid>

@@ -4,16 +4,28 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="0c7f7fc4d2e74f9384105a17d74b6c55" Name="Diagram1">
-        <EntityTypeShape EntityType="SagdievaK_MatieModel.Master_Service" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SagdievaK_MatieModel.Role" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SagdievaK_MatieModel.Service" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SagdievaK_MatieModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SagdievaK_MatieModel.TypeQualification" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SagdievaK_MatieModel.User" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <AssociationConnector Association="SagdievaK_MatieModel.FK_Master_Service_Service" ManuallyRouted="false" />
-        <AssociationConnector Association="SagdievaK_MatieModel.FK_Master_Service_User" ManuallyRouted="false" />
-        <AssociationConnector Association="SagdievaK_MatieModel.FK_User_Role" ManuallyRouted="false" />
+      <Diagram DiagramId="d4eea7ff544d46afb7262c513494a80c" Name="Diagram1" ZoomLevel="30">
+        <EntityTypeShape EntityType="SagdievaKamilla_MatieExamModel.CollectionService" Width="1.5" PointX="0.75" PointY="11.125" />
+        <EntityTypeShape EntityType="SagdievaKamilla_MatieExamModel.Master_Service" Width="1.5" PointX="5.25" PointY="7.5" />
+        <EntityTypeShape EntityType="SagdievaKamilla_MatieExamModel.MasterQualification" Width="1.5" PointX="5.25" PointY="1.5" />
+        <EntityTypeShape EntityType="SagdievaKamilla_MatieExamModel.Order" Width="1.5" PointX="5.25" PointY="4.25" />
+        <EntityTypeShape EntityType="SagdievaKamilla_MatieExamModel.Role" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="SagdievaKamilla_MatieExamModel.Service" Width="1.5" PointX="3" PointY="11.5" />
+        <EntityTypeShape EntityType="SagdievaKamilla_MatieExamModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="1.125" />
+        <EntityTypeShape EntityType="SagdievaKamilla_MatieExamModel.TypeQualification" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="SagdievaKamilla_MatieExamModel.TypeService" Width="1.5" PointX="0.75" PointY="13.5" />
+        <EntityTypeShape EntityType="SagdievaKamilla_MatieExamModel.User" Width="1.5" PointX="3" PointY="8" />
+        <EntityTypeShape EntityType="SagdievaKamilla_MatieExamModel.Worker" Width="1.5" PointX="3" PointY="4.125" />
+        <AssociationConnector Association="SagdievaKamilla_MatieExamModel.FK_Service_CollectionService" />
+        <AssociationConnector Association="SagdievaKamilla_MatieExamModel.FK_Master_Service_Service" />
+        <AssociationConnector Association="SagdievaKamilla_MatieExamModel.FK_Master_Service_Worker" />
+        <AssociationConnector Association="SagdievaKamilla_MatieExamModel.FK_MasterQualification_TypeQualification1" />
+        <AssociationConnector Association="SagdievaKamilla_MatieExamModel.FK_MasterQualification_Worker1" />
+        <AssociationConnector Association="SagdievaKamilla_MatieExamModel.FK_Order_Product" />
+        <AssociationConnector Association="SagdievaKamilla_MatieExamModel.FK_Order_User" />
+        <AssociationConnector Association="SagdievaKamilla_MatieExamModel.FK_Order_Worker" />
+        <AssociationConnector Association="SagdievaKamilla_MatieExamModel.FK_Worker_Role" />
+        <AssociationConnector Association="SagdievaKamilla_MatieExamModel.FK_Service_TypeService" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

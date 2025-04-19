@@ -14,7 +14,16 @@ namespace Sagdieva_Matie.DB
     
     public partial class TypeQualification
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public TypeQualification()
+        {
+            this.MasterQualification = new HashSet<MasterQualification>();
+        }
+    
         public int ID { get; set; }
         public string Name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MasterQualification> MasterQualification { get; set; }
     }
 }

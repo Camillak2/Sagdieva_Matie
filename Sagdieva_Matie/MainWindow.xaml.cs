@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Sagdieva_Matie.Pages;
 
 namespace Sagdieva_Matie
 {
@@ -23,6 +24,7 @@ namespace Sagdieva_Matie
         public MainWindow()
         {
             InitializeComponent();
+            NaFr.NavigationService.Navigate(new AuthorizationPage());
         }
 
         private void SvernutBtn_Click(object sender, RoutedEventArgs e)

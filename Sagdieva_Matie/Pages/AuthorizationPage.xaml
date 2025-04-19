@@ -5,10 +5,99 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Sagdieva_Matie.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="730" d:DesignWidth="1300"
       Title="AuthorizationPage">
 
     <Grid>
-        
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TextBlock
+        Text="Добро пожаловать в Матье!"
+        Grid.Column="0"
+        Grid.ColumnSpan="5"
+        Grid.Row="1"
+        Grid.RowSpan="1"
+        FontSize="76"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"/>
+        <TextBlock
+            Text="АВТОРИЗАЦИЯ"
+            Grid.Column="0"
+            Grid.ColumnSpan="5"
+            Grid.Row="0"
+            Grid.RowSpan="1"
+            FontSize="76"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"/>
+
+        <TextBlock
+            Text="Логин"
+            Grid.Column="1"
+            Grid.Row="2"
+            Grid.RowSpan="1"
+            FontSize="40"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"/>
+
+        <TextBox x:Name="LoginTbx"
+            Grid.Column="1"
+            Grid.ColumnSpan="3"
+            Grid.Row="2"
+            Width="450"
+            Height="60"
+            Grid.RowSpan="1"
+            FontSize="40"
+            Margin="0 0 40 0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Center"/>
+        <TextBlock
+            Text="Пароль"
+            Grid.Column="1"
+            Grid.Row="3"
+            Grid.RowSpan="1"
+            FontSize="40"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"/>
+        <PasswordBox x:Name="PasswordPbx"
+            Grid.Column="1"
+            Grid.ColumnSpan="3"
+            Grid.Row="3"
+            Width="450"
+            Height="55"
+            Grid.RowSpan="1"
+            FontSize="40"
+                     Margin="0 0 40 0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Center"/>
+
+
+
+        <Button x:Name="AuthBtn"
+            Content="Войти"
+            Grid.Column="1"
+            Grid.ColumnSpan="3"
+            Grid.Row="4"
+            Width="350"
+            Height="60"
+            Grid.RowSpan="2"
+            FontSize="40"
+                Click="AuthBtn_Click"/>
+
     </Grid>
 </Page>

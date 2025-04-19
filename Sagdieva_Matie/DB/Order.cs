@@ -12,22 +12,16 @@ namespace Sagdieva_Matie.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class Order
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
-        {
-            this.Order = new HashSet<Order>();
-        }
+        public int IDOrder { get; set; }
+        public Nullable<int> IDService { get; set; }
+        public Nullable<int> IDUser { get; set; }
+        public Nullable<int> NumberInQueu { get; set; }
+        public Nullable<int> IDWorker { get; set; }
     
-        public int IDUser { get; set; }
-        public string Surname { get; set; }
-        public string Name { get; set; }
-        public Nullable<int> BalanceShop { get; set; }
-        public string Login { get; set; }
-        public string Password { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Order> Order { get; set; }
+        public virtual Service Service { get; set; }
+        public virtual User User { get; set; }
+        public virtual Worker Worker { get; set; }
     }
 }

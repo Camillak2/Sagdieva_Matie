@@ -9,8 +9,9 @@ namespace Sagdieva_Matie.DB
 {
     internal class DBConnection
     {
-        public static SagdievaK_Matie matie = new SagdievaK_Matie();
+        public static SagdievaKamilla_MatieExamEntities matie = new SagdievaKamilla_MatieExamEntities();
 
         public static User logginedUser;
+        public static Worker logginedWorker;
     }
 }

@@ -14,11 +14,11 @@ namespace Sagdieva_Matie.DB
     
     public partial class Master_Service
     {
+        public Nullable<int> IDMaster { get; set; }
+        public Nullable<int> IDService { get; set; }
         public int ID { get; set; }
-        public Nullable<int> ID_Master { get; set; }
-        public Nullable<int> ID_Service { get; set; }
     
         public virtual Service Service { get; set; }
-        public virtual User User { get; set; }
+        public virtual Worker Worker { get; set; }
     }
 }

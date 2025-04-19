@@ -13,10 +13,10 @@ namespace Sagdieva_Matie.DB
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class SagdievaK_MatieEntities : DbContext
+    public partial class SagdievaKamilla_MatieExamEntities : DbContext
     {
-        public SagdievaK_MatieEntities()
-            : base("name=SagdievaK_MatieEntities")
+        public SagdievaKamilla_MatieExamEntities()
+            : base("name=SagdievaKamilla_MatieExamEntities")
         {
         }
     
@@ -25,11 +25,16 @@ namespace Sagdieva_Matie.DB
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<CollectionService> CollectionService { get; set; }
         public virtual DbSet<Master_Service> Master_Service { get; set; }
+        public virtual DbSet<MasterQualification> MasterQualification { get; set; }
+        public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<Service> Service { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<TypeQualification> TypeQualification { get; set; }
+        public virtual DbSet<TypeService> TypeService { get; set; }
         public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<Worker> Worker { get; set; }
     }
 }

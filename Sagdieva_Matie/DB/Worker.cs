@@ -12,29 +12,29 @@ namespace Sagdieva_Matie.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class Service
+    public partial class Worker
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Service()
+        public Worker()
         {
             this.Master_Service = new HashSet<Master_Service>();
+            this.MasterQualification = new HashSet<MasterQualification>();
             this.Order = new HashSet<Order>();
         }
     
-        public int IDProduct { get; set; }
+        public int IDWorker { get; set; }
+        public string Surname { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
-        public Nullable<int> IDWorker { get; set; }
-        public Nullable<int> ID_Collection { get; set; }
-        public Nullable<int> ID_Type { get; set; }
-        public string Image { get; set; }
-        public Nullable<decimal> Cost { get; set; }
+        public Nullable<int> IDRole { get; set; }
+        public string Login { get; set; }
+        public string Password { get; set; }
     
-        public virtual CollectionService CollectionService { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Master_Service> Master_Service { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MasterQualification> MasterQualification { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Order { get; set; }
-        public virtual TypeService TypeService { get; set; }
+        public virtual Role Role { get; set; }
     }
 }

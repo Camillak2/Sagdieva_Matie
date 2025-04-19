@@ -12,22 +12,13 @@ namespace Sagdieva_Matie.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class MasterQualification
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
-        {
-            this.Order = new HashSet<Order>();
-        }
+        public int IDMaster { get; set; }
+        public int ID_TypeQual { get; set; }
+        public int ID { get; set; }
     
-        public int IDUser { get; set; }
-        public string Surname { get; set; }
-        public string Name { get; set; }
-        public Nullable<int> BalanceShop { get; set; }
-        public string Login { get; set; }
-        public string Password { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Order> Order { get; set; }
+        public virtual TypeQualification TypeQualification { get; set; }
+        public virtual Worker Worker { get; set; }
     }
 }
